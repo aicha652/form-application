@@ -1,7 +1,11 @@
 import './Form.css'
+import Modal from './Modal'
 import { useState } from "react"
 
 export default function Form() {
+    const [errorMssage, setErrorMessage] = useState(null)
+    const [showModal, setShowModal] = useState(false)
+
     const [form, setForm] = useState({name: "", phone: "", age: "", employee: false, salary: ""})
     function Name(event) {
         return(
@@ -27,8 +31,26 @@ export default function Form() {
 
     const btnIsDisabled = form.name === "" || form.phone === "" || form.age === "" || form.employee === false || form.salary === ""
     
+    function handleFormClick() {
+        if(form.age < 18 || form.age > 100){
+            setErrorMessage("The Age is not Allowed")
+        }
+        else if(form.phone.length < 10 || form.phone.length > 12){
+            setErrorMessage("The phone number format is Incorrect")
+        }
+        else{
+            setErrorMessage(null)
+        }
+        setShowModal(true)
+    }
+
+    function handleDivClass() {
+        if(showModal){
+          setShowModal(false)
+        }
+    }
     return(
-        <div className="divClass">
+        <div onClick={handleDivClass} className="divClass">
             <form 
                onSubmit={(event) => {
                   event.preventDefault()
@@ -56,6 +78,7 @@ export default function Form() {
                     <option>above 2000</option>
                 </select>
                 <button
+                   onClick={handleFormClick}
                    className={btnIsDisabled ? "disable" : ""} 
                    disabled={btnIsDisabled} 
                    id="formButton"
@@ -63,7 +86,7 @@ export default function Form() {
                     Submit
                 </button>
             </form>
-            {/*<Modal />*/}
+            <Modal errorMessage={errorMssage} isVisible={showModal}/>
         </div>
     )
 }
