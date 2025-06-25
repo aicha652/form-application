@@ -1,5 +1,6 @@
 import './Form.css'
 import Modal from './Modal'
+import MyComponent from "./MyComponent"
 import { useState } from "react"
 
 export default function Form() {
@@ -59,14 +60,33 @@ export default function Form() {
                 <h3>Requsting a form</h3>
                 <hr style={{ width: "100%"}}></hr>
 
-                <label>Name:</label>
-                <input value={form.name} onChange={Name}/>
+                {/*<label>Name:</label>
+                <input value={form.name} onChange={Name}/>*/}
 
-                <label>Phone Number:</label>
+                <MyComponent 
+                 inputName="Name:"
+                 value={form.name}
+                 handleChange={Name}
+                 />
+
+                <MyComponent 
+                 inputName="Phone Number:"
+                 value={form.phone}
+                 handleChange={Phone}
+                 />
+
+                <MyComponent 
+                 inputName="Age:"
+                 value={form.age}
+                 handleChange={Age}
+                 />
+
+                {/*<label>Phone Number:</label>
                 <input value={form.phone} onChange={Phone}/>
+                */}
 
-                <label>Age:</label>
-                <input value={form.age} onChange={Age}/>
+                {/*<label>Age:</label>
+                <input value={form.age} onChange={Age}/>*/}
 
                 <label>Are you an employee:</label>
                 <input type="checkbox" checked={form.employee} onChange={Employee}/>
