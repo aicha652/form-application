@@ -2,6 +2,7 @@ import './Form.css'
 import Modal from './Modal'
 import MyComponent from "./MyComponent"
 import { useState } from "react"
+import { LoanInputContext } from './contexts/LoanFormInputContext'
 
 export default function Form() {
     const [errorMssage, setErrorMessage] = useState(null)
@@ -9,9 +10,7 @@ export default function Form() {
 
     const [form, setForm] = useState({name: "", phone: "", age: "", employee: false, salary: ""})
     function Name(event) {
-        return(
-            setForm({...form, name: event.target.value})
-        )
+        setForm({...form, name: event.target.value})
     }
 
     function Phone(event) {
@@ -63,23 +62,43 @@ export default function Form() {
                 {/*<label>Name:</label>
                 <input value={form.name} onChange={Name}/>*/}
 
-                <MyComponent 
-                 inputName="Name:"
-                 value={form.name}
-                 handleChange={Name}
-                 />
+                <LoanInputContext.Provider
+                  value={{ 
+                    value: form.name,
+                    handleChange: Name,
+                    labelTitle: "name"
+                 }}
+                >
+                    <MyComponent />
+                </LoanInputContext.Provider>
 
-                <MyComponent 
-                 inputName="Phone Number:"
-                 value={form.phone}
-                 handleChange={Phone}
-                 />
 
-                <MyComponent 
+                <LoanInputContext.Provider
+                  value={{ 
+                    value: form.phone,
+                    handleChange: Phone,
+                    labelTitle: "Phone Number"
+                 }}
+                >
+                    <MyComponent/>
+                </LoanInputContext.Provider>
+                
+
+                <LoanInputContext.Provider
+                 value={{
+                    value: form.age,
+                    handleChange: Age,
+                    labelTitle: "Age"
+                 }}
+                >
+                    <MyComponent />
+                </LoanInputContext.Provider>
+                
+                {/*<MyComponent 
                  inputName="Age:"
-                 value={form.age}
-                 handleChange={Age}
-                 />
+                 valueComponent={form.age}
+                 handleChangeComponent={Age}
+                 />*/}
 
                 {/*<label>Phone Number:</label>
                 <input value={form.phone} onChange={Phone}/>
