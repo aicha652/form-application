@@ -3,12 +3,16 @@ import Modal from './Modal'
 import MyComponent from "./MyComponent"
 import { useState } from "react"
 import { LoanInputContext } from './contexts/LoanFormInputContext'
+import { useContext } from 'react'
+import { UserContext } from './contexts/UserContext'
 
 export default function Form() {
+    const useData = useContext(UserContext)
     const [errorMssage, setErrorMessage] = useState(null)
     const [showModal, setShowModal] = useState(false)
 
-    const [form, setForm] = useState({name: "", phone: "", age: "", employee: false, salary: ""})
+    const initialName = useData.name
+    const [form, setForm] = useState({name: initialName, phone: "", age: "", employee: false, salary: ""})
     function Name(event) {
         setForm({...form, name: event.target.value})
     }
@@ -51,6 +55,7 @@ export default function Form() {
     }
     return(
         <div onClick={handleDivClass} className="divClass">
+            <h1 style={{ color: "white" }}>Hello {useData.name}</h1>
             <form 
                onSubmit={(event) => {
                   event.preventDefault()
